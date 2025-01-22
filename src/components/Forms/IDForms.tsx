@@ -29,11 +29,11 @@ export const IDForms = () => {
   const [data, setData] = useState(null);
   const [ID, setID] = useState(null);
 
-  useEffect(() => {
-    const postData = async () => {
-      const response = await axios.post(
-        `${URLLINK}/validate`,
-        { studentId: ID },
+ useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get(
+        "http://tomo-scanner.app.dlsu-lscs.org/status",
+        {studentId: ID},
         {
           headers: {
             "Content-Type": "application/json",
@@ -41,9 +41,11 @@ export const IDForms = () => {
         }
       );
       setData(response.data);
+      console.log(response.data);
     };
-    postData();
+    fetchData();
   }, [ID]);
+
 
   //Forms
   const form = useForm<z.infer<typeof IDSchema>>({
@@ -54,7 +56,7 @@ export const IDForms = () => {
   });
 
   const onSubmit = (values: z.infer<typeof IDSchema>) => {
-    setID(values.idNumber);
+    setID(Number(values.idNumber));
   };
 
   return (
