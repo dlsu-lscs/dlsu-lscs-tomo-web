@@ -22,30 +22,67 @@ const IDSchema = z.object({
   idNumber: z.string(),
 });
 
+// useEffect(() => {
+//   const fetchData = async () => {
+//     try {
+//       const response = await axios.post(
+//         `${URLLINK}/validate`,
+//         { studentId: ID },
+//         {
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//         }
+//       );
+//       console.log(ID);
+//       console.log(response);
+//     } catch (error) {
+//       console.log(error.response.data.message);
+//     }
+//   };
+//   fetchData();
+// }, [ID]);
+
+// useEffect(() => {
+//   const fetchData = async () => {
+//     try {
+//       const response = await axios.get(`${URLLINK}/status?studentId=` + ID, {
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       });
+//       console.log(ID);
+//       console.log(response);
+//     } catch (error) {
+//       console.log(error.response.data.message);
+//     }
+//   };
+//   fetchData();
+// }, [ID]);
+
 export const IDForms = () => {
   //Constant URI LINK
   const URLLINK = "http://tomo-scanner.app.dlsu-lscs.org";
 
   const [data, setData] = useState(null);
-  const [ID, setID] = useState(null);
+  const [ID, setID] = useState(0);
 
- useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(
-        "http://tomo-scanner.app.dlsu-lscs.org/status",
-        {studentId: ID},
-        {
+      try {
+        const response = await axios.get(`${URLLINK}/status?studentId=` + ID, {
           headers: {
             "Content-Type": "application/json",
           },
-        }
-      );
-      setData(response.data);
-      console.log(response.data);
+        });
+        console.log(ID);
+        console.log(response);
+      } catch (error) {
+        console.log(error.response.data.message);
+      }
     };
     fetchData();
   }, [ID]);
-
 
   //Forms
   const form = useForm<z.infer<typeof IDSchema>>({
@@ -57,6 +94,7 @@ export const IDForms = () => {
 
   const onSubmit = (values: z.infer<typeof IDSchema>) => {
     setID(Number(values.idNumber));
+    console.log(Number(values.idNumber));
   };
 
   return (
