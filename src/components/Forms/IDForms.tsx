@@ -17,55 +17,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import {useCookies} from "react-cookie";
 
 const IDSchema = z.object({
   idNumber: z.string(),
 });
 
-// useEffect(() => {
-//   const fetchData = async () => {
-//     try {
-//       const response = await axios.post(
-//         `${URLLINK}/validate`,
-//         { studentId: ID },
-//         {
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//         }
-//       );
-//       console.log(ID);
-//       console.log(response);
-//     } catch (error) {
-//       console.log(error.response.data.message);
-//     }
-//   };
-//   fetchData();
-// }, [ID]);
 
-// useEffect(() => {
-//   const fetchData = async () => {
-//     try {
-//       const response = await axios.get(`${URLLINK}/status?studentId=` + ID, {
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//       });
-//       console.log(ID);
-//       console.log(response);
-//     } catch (error) {
-//       console.log(error.response.data.message);
-//     }
-//   };
-//   fetchData();
-// }, [ID]);
-
-export const IDForms = () => {
+export const IDForms = ({passIDData}) => {
   //Constant URI LINK
   const URLLINK = "http://tomo-scanner.app.dlsu-lscs.org";
 
-  const [data, setData] = useState(null);
+  const [,setCurrentUser] = useCookies<any>(["currentUser"]);
   const [ID, setID] = useState(0);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,13 +40,19 @@ export const IDForms = () => {
             "Content-Type": "application/json",
           },
         });
-        console.log(ID);
-        console.log(response);
+        setCurrentUser("currentUser", response.data, {path: "/", maxAge: 60});
       } catch (error) {
-        console.log(error.response.data.message);
+        if(error.name == "AxiosError"){
+          console.log(error.response.data.message)
+        }else{
+        console.log(error);
+        }
       }
     };
+    if(ID){
+
     fetchData();
+    }
   }, [ID]);
 
   //Forms
@@ -94,8 +65,8 @@ export const IDForms = () => {
 
   const onSubmit = (values: z.infer<typeof IDSchema>) => {
     setID(Number(values.idNumber));
-    console.log(Number(values.idNumber));
   };
+
 
   return (
     <>
