@@ -19,6 +19,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import {useCookies} from "react-cookie";
 
+
+import BarcodeScanner from "./Barcode.tsx"
+
+
 const IDSchema = z.object({
   idNumber: z.string(),
 });
@@ -50,7 +54,6 @@ export const IDForms = ({passIDData}) => {
       }
     };
     if(ID){
-
     fetchData();
     }
   }, [ID]);
@@ -67,9 +70,14 @@ export const IDForms = ({passIDData}) => {
     setID(Number(values.idNumber));
   };
 
+    const onNewScanResult = (decodedText, decodedResult) => {
+    setID(decodedText);
+    console.log(decodedResult);
+  };
 
   return (
     <>
+      <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="">
           <div className="flex space-x-2">
@@ -100,6 +108,15 @@ export const IDForms = ({passIDData}) => {
           </div>
         </form>
       </Form>
+        <div>
+          <BarcodeScanner
+   fps={30}
+            qrbox={240}
+            disableFlip={false}
+            qrCodeSuccessCallback={onNewScanResult}
+          />
+        </div>
+      </div>
     </>
   );
 };
