@@ -10,7 +10,7 @@ export const Home = () => {
       <div className="min-h-screen bg-[#000000] md:p-8 text-white p-6">
         <div>
           <div className="flex justify-center font-bold md:text-4xl text-3xl">
-            Frosh Convocation
+            LSSC x Tomo Coffee
           </div>
           <div className="flex justify-center py-2">
             Scan to Verify LSCS Membership
