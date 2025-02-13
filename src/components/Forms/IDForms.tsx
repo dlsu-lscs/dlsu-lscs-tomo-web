@@ -97,7 +97,7 @@ export const IDForms = () => {
                 <FormItem className="text-center">
                   <FormControl>
                     <Input
-                      placeholder="#1234567"
+                      placeholder="1234567"
                       {...field}
                       className="text-black"
                     />

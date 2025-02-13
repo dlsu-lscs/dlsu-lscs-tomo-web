@@ -5,20 +5,20 @@ import { useToast } from "@/hooks/use-toast";
 
 export const Claim = () => {
   const URLLINK = "http://tomo-scanner.app.dlsu-lscs.org";
-  const [cookies, setCookie] = useCookies(["currentUser"]);
+  const [currentUser, setCurrentUser] = useCookies(["currentUser"]);
   const { toast } = useToast();
 
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${URLLINK}/status?studentId=${cookies.currentUser?.member_details?.id}`,
+        `${URLLINK}/status?studentId=${currentUser.currentUser?.member_details?.id}`,
         {
           headers: { "Content-Type": "application/json" },
         }
       );
-      setCookie("currentUser", response.data, { path: "/", maxAge: 60 });
+      setCurrentUser("currentUser", response.data, { path: "/", maxAge: 60 });
       toast({
-          title: `${cookies.currentUser?.member_details?.full_name} has claimed the promo`,
+          title: `${currentUser.currentUser?.member_details?.full_name} has claimed the promo`,
           className: "text-white bg-black rounded-lg border-2",
         });
     } catch (error) {
@@ -33,8 +33,8 @@ export const Claim = () => {
   const postData = async () => {
     try {
       await axios.post(
-        `${URLLINK}/validate`,
-        { studentId: Number(cookies.currentUser?.member_details?.id) },
+        `${URLLINK}/claim`,
+        { studentId: Number(currentUser.currentUser?.member_details?.id) },
         { headers: { "Content-Type": "application/json" } }
       );
       
