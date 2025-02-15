@@ -10,9 +10,19 @@ import {
 } from "@/components/ui/card";
 
 import { Claim } from "../Claim/Claim.tsx";
+import { useState } from "react";
 
 export const Info = () => {
   const [currentUser, , removeCurrentUser] = useCookies(["currentUser"]);
+  const [claimed, setClaimed] = useState(false);
+
+  const date = new Date();
+
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+
+  let currentDate = `${day}-${month}-${year}`;
 
   return (
     <>
@@ -46,16 +56,33 @@ export const Info = () => {
             <CardTitle className="font-bold">
               {currentUser.currentUser.member_details.full_name}
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="opacity-75">
               {currentUser.currentUser.member_details.id}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div>{currentUser.currentUser.status}</div>
           </CardContent>
-          <CardFooter>
-            <Claim></Claim>
-          </CardFooter>
+          {claimed ? (
+            <>
+              <CardFooter>
+                {currentUser.currentUser.member_details.position_name} has
+                claimed the promo at {currentDate}
+              </CardFooter>
+            </>
+          ) : (
+            <>
+              <CardFooter>
+                <span
+                  onClick={() => {
+                    setClaimed(!claimed);
+                  }}
+                >
+                  <Claim></Claim>
+                </span>
+              </CardFooter>
+            </>
+          )}
         </Card>
       </div>
     </>

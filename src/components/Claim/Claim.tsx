@@ -18,9 +18,9 @@ export const Claim = () => {
       );
       setCurrentUser("currentUser", response.data, { path: "/", maxAge: 60 });
       toast({
-          title: `${currentUser.currentUser?.member_details?.full_name} has claimed the promo`,
-          className: "text-white bg-black rounded-lg border-2",
-        });
+        title: `${currentUser.currentUser?.member_details?.full_name} has claimed the promo`,
+        className: "text-white bg-black rounded-lg border-2",
+      });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error(error.response?.data?.message || "An error occurred");
@@ -32,12 +32,12 @@ export const Claim = () => {
 
   const postData = async () => {
     try {
-      await axios.post(
+      const response = await axios.post(
         `${URLLINK}/claim`,
         { studentId: Number(currentUser.currentUser?.member_details?.id) },
         { headers: { "Content-Type": "application/json" } }
       );
-      
+      console.log(response);
       fetchData();
     } catch (error) {
       if (axios.isAxiosError(error)) {
