@@ -1,50 +1,49 @@
-# React + TypeScript + Vite
+# LSCS Tomo Web
+![LSCS | RND](https://img.shields.io/badge/LSCS-RND-brightgreen)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+LSCS Tomo Web is a web application designed for LSCS members to seamlessly claim their exclusive coffee promos in partnership with Tomo Coffee.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies Used
+- React.js (Frontend Framework)
+- Tailwind CSS (Styling)
+- TypeScript (Static Typing)
+- Axios (API Requests)
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Prerequisites
+Ensure you have the following installed:
+- [Node.js](https://nodejs.org/) (Latest LTS recommended)
+- npm or yarn (Package manager)
 
-- Configure the top-level `parserOptions` property like this:
+### Installation
+1. Clone the repository:
+   ```sh
+   git clone git@github.com:dlsu-lscs/dlsu-lscs-tomo-web.git
+   cd lscs-links-web
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   # or
+   yarn install
+   ```
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Running the Application
+To start the development server, run:
+```sh
+npm run dev
+# or
+yarn dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+The app will be accessible at `http://localhost:3000/`.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+## Configuration
+Create a `.env` file in the root directory and add necessary environment variables:
 ```
+VITE_API_BASE_URL=<backend_api_url>
+```
+
