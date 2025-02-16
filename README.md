@@ -41,6 +41,9 @@ yarn dev
 
 The app will be accessible at `http://localhost:3000/`.
 
+## Access the production ready app:
+http://lscs-tomo-web.app.dlsu-lscs.org/
+
 ## Configuration
 Create a `.env` file in the root directory and add necessary environment variables:
 ```
