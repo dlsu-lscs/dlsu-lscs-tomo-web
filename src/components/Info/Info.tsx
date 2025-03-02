@@ -1,4 +1,4 @@
-import { useCookies } from "react-cookie";
+import { useCookies } from 'react-cookie'
 
 import {
   Card,
@@ -7,40 +7,42 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from '@/components/ui/card'
 
-import { Claim } from "../Claim/Claim.tsx";
-import { useState } from "react";
+import { Claim } from '../Claim/Claim.tsx'
+import { useState } from 'react'
 
 export const Info = () => {
-  const [currentUser, , removeCurrentUser] = useCookies(["currentUser"]);
-  const [claimed, setClaimed] = useState(false);
+  const [currentUser, , removeCurrentUser] = useCookies(['currentUser'])
+  const [claimed, setClaimed] = useState(false)
 
-  const date = new Date();
+  const date = new Date()
 
-  let day = date.getDate();
-  let month = date.getMonth() + 1;
-  let year = date.getFullYear();
+  let day = date.getDate()
+  let month = date.getMonth() + 1
+  let year = date.getFullYear()
 
-  let currentDate = `${day}-${month}-${year}`;
+  let currentDate = `${day}-${month}-${year}`
 
   return (
     <>
-      <div>
+      <div className="p-6">
         <div className="my-6 flex items-center">
           <button
-            className="border-2 flex p-2 rounded-lg hover:p-3 transition-all"
+            className="border-2 flex items-center p-2 rounded-lg hover:p-3 transition-all
+            bg-[#FEF7E4] text-[#333330] border-[#FEF7E4]
+            "
             onClick={() => {
-              removeCurrentUser("currentUser", { path: "/" });
+              removeCurrentUser('currentUser', { path: '/' })
             }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              strokeWidth={3}
-              stroke="white"
-              className="size-6 hover:text-black"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6 text-[#333330] hover:text-black"
             >
               <path
                 strokeLinecap="round"
@@ -51,7 +53,7 @@ export const Info = () => {
             <div className="mx-3 text-xl font-bold">Go Back</div>
           </button>
         </div>
-        <Card className="bg-black text-white border-4 p-4 my-12">
+        <Card className="bg-[#FEF7E4] text-[#333330] border-[#FEF7E4] p-4 my-12">
           <CardHeader>
             <CardTitle className="font-bold">
               {currentUser.currentUser.member_details.full_name}
@@ -75,7 +77,7 @@ export const Info = () => {
               <CardFooter>
                 <span
                   onClick={() => {
-                    setClaimed(!claimed);
+                    setClaimed(!claimed)
                   }}
                 >
                   <Claim></Claim>
@@ -86,7 +88,7 @@ export const Info = () => {
         </Card>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Info;
+export default Info

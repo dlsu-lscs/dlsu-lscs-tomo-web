@@ -1,54 +1,56 @@
-import { Button } from "@/components/ui/button";
-import { useCookies } from "react-cookie";
-import axios from "axios";
-import { useToast } from "@/hooks/use-toast";
+import { Button } from '@/components/ui/button'
+import { useCookies } from 'react-cookie'
+import axios from 'axios'
+import { useToast } from '@/hooks/use-toast'
 
 export const Claim = () => {
-  const URLLINK = "http://tomo-scanner.app.dlsu-lscs.org";
-  const [currentUser, setCurrentUser] = useCookies(["currentUser"]);
-  const { toast } = useToast();
+  const URLLINK = 'http://tomo-scanner.app.dlsu-lscs.org'
+  const [currentUser, setCurrentUser] = useCookies(['currentUser'])
+  const { toast } = useToast()
 
   const fetchData = async () => {
     try {
       const response = await axios.get(
         `${URLLINK}/status?studentId=${currentUser.currentUser?.member_details?.id}`,
         {
-          headers: { "Content-Type": "application/json" },
+          headers: { 'Content-Type': 'application/json' },
         }
-      );
-      setCurrentUser("currentUser", response.data, { path: "/", maxAge: 60 });
+      )
+      setCurrentUser('currentUser', response.data, { path: '/', maxAge: 60 })
       toast({
         title: `${currentUser.currentUser?.member_details?.full_name} has claimed the promo`,
-        className: "text-white bg-black rounded-lg border-2",
-      });
+        className:
+          ' bg-[#FEF7E4] text-[#333330] border-[#FEF7E4] rounded-lg border-2',
+      })
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error(error.response?.data?.message || "An error occurred");
+        console.error(error.response?.data?.message || 'An error occurred')
       } else {
-        console.error(error);
+        console.error(error)
       }
     }
-  };
+  }
 
   const postData = async () => {
     try {
       const response = await axios.post(
         `${URLLINK}/claim`,
         { studentId: Number(currentUser.currentUser?.member_details?.id) },
-        { headers: { "Content-Type": "application/json" } }
-      );
-      console.log(response);
-      fetchData();
+        { headers: { 'Content-Type': 'application/json' } }
+      )
+      console.log(response)
+      fetchData()
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast({
-          title: error.response?.data?.message || "Request failed",
-          className: "text-white bg-black rounded-lg border-2",
-        });
+          title: error.response?.data?.message || 'Request failed',
+          className:
+            ' bg-[#FEF7E4] text-[#333330] border-[#FEF7E4] rounded-lg border-2',
+        })
       }
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
   return (
     <Button
@@ -58,7 +60,7 @@ export const Claim = () => {
     >
       Claim Coffee
     </Button>
-  );
-};
+  )
+}
 
-export default Claim;
+export default Claim
