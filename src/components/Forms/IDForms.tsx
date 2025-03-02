@@ -24,8 +24,6 @@ const IDSchema = z.object({
   idNumber: z.string(),
 })
 
-import BarcodeScannerComponent from 'react-qr-barcode-scanner'
-
 export const IDForms = () => {
   // Constant URI LINK
   const URLLINK = 'http://tomo-scanner.app.dlsu-lscs.org'

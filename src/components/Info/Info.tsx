@@ -11,6 +11,7 @@ import {
 
 import { Claim } from '../Claim/Claim.tsx'
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 
 export const Info = () => {
   const [currentUser, , removeCurrentUser] = useCookies(['currentUser'])
@@ -68,20 +69,38 @@ export const Info = () => {
           {claimed ? (
             <>
               <CardFooter>
-                {currentUser.currentUser.member_details.position_name} has
-                claimed the promo at {currentDate}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={
+                    claimed ? { opacity: 1, y: 0 } : { opacity: 1, scale: 1.1 }
+                  }
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  {currentUser.currentUser.member_details.position_name} has
+                  claimed the promo at {currentDate}
+                </motion.div>
               </CardFooter>
             </>
           ) : (
             <>
               <CardFooter>
-                <span
-                  onClick={() => {
-                    setClaimed(!claimed)
-                  }}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={
+                    claimed ? { opacity: 1, y: 0 } : { opacity: 1, scale: 1.1 }
+                  }
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.25 }}
                 >
-                  <Claim></Claim>
-                </span>
+                  <span
+                    onClick={() => {
+                      setClaimed(!claimed)
+                    }}
+                  >
+                    <Claim></Claim>
+                  </span>
+                </motion.div>
               </CardFooter>
             </>
           )}
