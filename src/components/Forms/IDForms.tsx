@@ -1,10 +1,10 @@
-"use client";
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -12,78 +12,78 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useCookies } from "react-cookie";
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useCookies } from 'react-cookie'
 
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from '@/hooks/use-toast'
 
 const IDSchema = z.object({
   idNumber: z.string(),
-});
-
-import BarcodeScannerComponent from "react-qr-barcode-scanner";
+})
 
 export const IDForms = () => {
   // Constant URI LINK
-  const URLLINK = "http://tomo-scanner.app.dlsu-lscs.org";
-  const { toast } = useToast();
+  const URLLINK = 'http://tomo-scanner.app.dlsu-lscs.org'
+  const { toast } = useToast()
 
-  const [, setCurrentUser] = useCookies(["currentUser"]);
-  const [ID, setID] = useState(0);
+  const [, setCurrentUser] = useCookies(['currentUser'])
+  const [ID, setID] = useState(0)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${URLLINK}/status?studentId=${ID}`, {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        });
-        setCurrentUser("currentUser", response.data, { path: "/", maxAge: 60 });
+        })
+        setCurrentUser('currentUser', response.data, { path: '/', maxAge: 60 })
 
         const { full_name, position_name, committee_name } =
-          response.data.member_details;
-        const firstName = full_name.split(" ")[0];
+          response.data.member_details
+        const firstName = full_name.split(' ')[0]
 
         toast({
           title:
-            position_name === "Member"
+            position_name === 'Member'
               ? `Hello ${firstName}, ${position_name} of La Salle Computer Society`
               : `Hello ${firstName}, ${position_name} of ${committee_name}`,
-          className: "text-white bg-black rounded-lg border-2",
-        });
+          className:
+            ' bg-[#FEF7E4] text-[#333330] border-[#FEF7E4] rounded-lg border-2',
+        })
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          console.log();
+          console.log()
           toast({
-            title: `${error.response?.data?.message || "Axios error occurred"}`,
-            className: "text-white bg-black rounded-lg border-2",
-          });
+            title: `${error.response?.data?.message || 'Axios error occurred'}`,
+            className:
+              ' bg-[#FEF7E4] text-[#333330] border-[#FEF7E4] rounded-lg border-2',
+          })
         } else {
-          console.log(error);
+          console.log(error)
         }
       }
-    };
+    }
 
     if (ID) {
-      fetchData();
+      fetchData()
     }
-  }, [ID, setCurrentUser, toast]);
+  }, [ID, setCurrentUser, toast])
 
   // Forms
   const form = useForm({
     resolver: zodResolver(IDSchema),
     defaultValues: {
-      idNumber: "",
+      idNumber: '',
     },
-  });
+  })
 
   const onSubmit = (values: any) => {
-    setID(Number(values.idNumber));
-  };
+    setID(Number(values.idNumber))
+  }
 
   return (
     <div>
@@ -99,36 +99,26 @@ export const IDForms = () => {
                     <Input
                       placeholder="1234567"
                       {...field}
-                      className="text-black"
+                      className="bg-[#FEF7E4] text-[#333330]"
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" className="bg-white text-black">
-              Submit
+            <Button type="submit" className="bg-[#333330] text-[#FFFF]">
+              Verify
             </Button>
           </div>
           <div className="flex justify-center py-2">
-            <FormItem className="text-center">
+            <FormItem className="text-center text-[#FEF7E4]">
               <FormDescription>Input your ID number instead</FormDescription>
             </FormItem>
           </div>
         </form>
       </Form>
-      <div className="my-4">
-        <BarcodeScannerComponent
-          width={500}
-          height={500}
-          onUpdate={(err: any, result: any) => {
-            if (err) console.log(err);
-            if (result) setID(Number(result.text));
-          }}
-        />
-      </div>
     </div>
-  );
-};
+  )
+}
 
-export default IDForms;
+export default IDForms
