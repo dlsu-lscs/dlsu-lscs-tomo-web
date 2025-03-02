@@ -1,13 +1,15 @@
-import { Layout } from "./layout/Layout";
-import { Toaster } from "@/components/ui/toaster";
+import { Layout } from './layout/Layout'
+import { Toaster } from '@/components/ui/toaster'
 
 export const App = () => {
   return (
     <>
-      <Layout></Layout>
-      <Toaster />
+      <div className="font-inter">
+        <Layout></Layout>
+        <Toaster />
+      </div>
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App

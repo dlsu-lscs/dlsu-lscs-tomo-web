@@ -1,9 +1,9 @@
-import { IDForms } from "../components/Forms/IDForms.tsx";
-import { Info } from "../components/Info/Info.tsx";
-import { useCookies } from "react-cookie";
+import { IDForms } from '../components/Forms/IDForms.tsx'
+import { Info } from '../components/Info/Info.tsx'
+import { useCookies } from 'react-cookie'
 
 export const Home = () => {
-  const [currentUser, ,] = useCookies(["currentUser"]);
+  const [cookies, ,] = useCookies(['currentUser'])
 
   return (
     <>
@@ -16,7 +16,7 @@ export const Home = () => {
             Scan to Verify LSCS Membership
           </div>
           <div className="flex justify-center py-8">
-            {Object.keys(currentUser).length == 0 ? (
+            {!('currentUser' in cookies) ? (
               <>
                 <IDForms></IDForms>
               </>
@@ -29,7 +29,7 @@ export const Home = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
