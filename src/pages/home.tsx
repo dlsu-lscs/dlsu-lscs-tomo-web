@@ -11,7 +11,7 @@ export const Home = () => {
       <AnimatePresence mode="wait">
         <div className="min-h-screen bg-[#FEF7E4] text-[#333330]">
           <div className="flex justify-center items-center min-h-screen min-w-screen">
-            <div className="bg-[#FEC44E] w-screen h-screen md:w-[25vw] md:h-[100vw]">
+            <div className="bg-[#FEC44E] w-screen h-screen md:w-[50vw] md:h-[100vw]">
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
